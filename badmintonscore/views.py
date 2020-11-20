@@ -1,11 +1,18 @@
 from django.shortcuts import render
-from .models import playername,teamnames
+from .models import playername,teamnames, match
 from django.http import HttpResponse
 import json
+from django.views.generic import ListView, DetailView, View
 
 
-def get_playername(request):
-    id = request.GET.get('id', '')
-    result = list(playername.objects.filter(
-    teamnames_id=int(id)).values('id', 'team_name'))
-    return HttpResponse(json.dumps(result), content_type="application/json")
+
+class HomeView(ListView):
+    model = match
+    template_name = "dashboard.html"
+    
+    ordering = ['-match_number']
+
+
+class Teams(ListView):
+    model = teamnames
+    template_name ="teamdetails.html"

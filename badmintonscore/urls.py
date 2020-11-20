@@ -18,10 +18,13 @@ from django.contrib import admin
 from django.urls import path
 from django.conf.urls import url
 from . import views
-from .views import get_playername
+from .views import HomeView,Teams
+
+app_name = 'badmintonscore'
 
 urlpatterns = [
-    url(r'^getplayername/$', get_playername)
+    path('', HomeView.as_view(), name='home'),
+    path('teams/',Teams.as_view(),name='team'),
 ]
 
 

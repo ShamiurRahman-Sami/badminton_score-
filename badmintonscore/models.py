@@ -1,6 +1,10 @@
 from django.db import models
 
 
+GROUP = (
+    ('A', 'A'),
+    ('B', 'B'),
+)
 class playername(models.Model):
     player_name = models.CharField(max_length=100)
 
@@ -17,8 +21,9 @@ class category(models.Model):
 
 class teamnames(models.Model):
     team_name = models.CharField(max_length=100)
-    ranking = models.IntegerField()
+    point = models.IntegerField()
     player = models.ManyToManyField(playername)
+    Group = models.CharField(choices= GROUP, max_length=2)
 
     def upload_logo(self, filename):
         path = 'badmintonscore/asset/photo{}'.format(filename)
@@ -40,8 +45,10 @@ class match(models.Model):
     score_A = models.IntegerField(default=0)
     score_B = models.IntegerField(default=0)
     updated_at = models.DateTimeField(auto_now=True)
-
+    
     def __str__(self):
-        return f"{self.match_number}-{self.match_category}"
+        return f"{self.match_number}-{self.match_category}-{self.player_nameA}"
         player_A = match.objects.get(team_nameA=teamnames).player_nameA
+
+    
 
